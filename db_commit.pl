@@ -2,20 +2,14 @@
 
 use strict;
 use warnings;
-use HTTP::Date;
-use IO::File;
 use DBD::mysql;
 use DBI;
-use Config::Simple;
 
-package DB_Commit;
-
-use lib '/opt/SYSTEM/perl/log_analyze/lib';
-require "output_log.pm";
+require 'output_log.pm';
 
 my $d = "DBI:mysql:casual";
 my $u = "root";
-my $p = "yura0244";
+my $p = "";
 
 my $sql ='INSERT INTO example_table (`1`,`2`,`3`) VALUE ("TEST","hoge","fuga");' ;
 
@@ -37,8 +31,8 @@ sub query_commit_db{
 
     Output_Log::error_log("DB execute start $sql");
     for (my $i = 0;$i < 1000000 ;$i++) {
-        $sth = $dbh->prepare($sql) or die "sql execute error $! \n $sql\n";
-        $sth->execute  or die "sql execute error $! [$i]!! ";
+        $sth = $dbh->prepare($sql) ;
+        $sth->execute($i) or die "sql execute error $! [$i]!! $sql";
         Output_Log::error_log("DB execute OK! $i");
     }
     $sth->finish  or die "DB Connection Close error $!" ;
