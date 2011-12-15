@@ -11,12 +11,12 @@ my $d = "DBI:mysql:casual";
 my $u = "root";
 my $p = "";
 
-my $sql ='INSERT INTO example_table (`1`,`2`,`3`) VALUE ("TEST","hoge","fuga");' ;
+my $sql ='INSERT INTO insert_table (`1`,`2`,`3`) VALUE ("TEST","hoge","fuga");' ;
 
 eval{
-    Output_Log::error_log("DB execute start");
+    print "DB execute start\n";
     query_commit_db($sql) ;
-    Output_Log::error_log("DB execute end ");
+    print "DB execute end\n";
 };
 if($@){
     print "$@ DB COMMIT ERROR";
@@ -29,13 +29,12 @@ sub query_commit_db{
         or die "DB Connect error $!";
     my $sth;
 
-    Output_Log::error_log("DB execute start $sql");
     for (my $i = 0;$i < 1000000 ;$i++) {
         $sth = $dbh->prepare($sql) ;
-        $sth->execute($i) or die "sql execute error $! [$i]!! $sql";
-        Output_Log::error_log("DB execute OK! $i");
+        $sth->execute or die "sql execute error $! [$i]!! $sql";
+        print "DB execute OK! $i\n";
     }
-    $sth->finish  or die "DB Connection Close error $!" ;
+    $sth->finish  or die "DB Connection Close ERROR $!" ;
     $dbh->disconnect;
 
     return 0;
