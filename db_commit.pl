@@ -5,8 +5,6 @@ use warnings;
 use DBD::mysql;
 use DBI;
 
-require 'output_log.pm';
-
 my $d = "DBI:mysql:casual";
 my $u = "root";
 my $p = "";
