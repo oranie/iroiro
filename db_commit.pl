@@ -22,6 +22,8 @@ if($@){
 
 sub query_commit_db{
     my $sql = $_[0] or die "No Query!!!";
+    #my $sql ='UPDATE update_table SET `1` = 'nekokak',`2` = 'not',`3` = 'casual' WHERE `log_id` = $i;' ;
+    #my $sql ='DELETE FROM delete_table WHERE `log_id` = $i;' ;
 
     my $dbh = DBI->connect($d, $u, $p)
         or die "DB Connect error $!";
