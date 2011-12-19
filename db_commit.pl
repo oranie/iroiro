@@ -9,7 +9,7 @@ my $d = "DBI:mysql:casual";
 my $u = "root";
 my $p = "";
 
-my $sql ='INSERT INTO insert_table (`1`,`2`,`3`) VALUE ("TEST","hoge","fuga");' ;
+my $sql = "INSERT INTO insert_table (`1`,`2`,`3`) VALUE ('TEST','hoge','fuga');";
 
 eval{
     print "DB execute start\n";
@@ -22,8 +22,8 @@ if($@){
 
 sub query_commit_db{
     my $sql = $_[0] or die "No Query!!!";
-    #my $sql ='UPDATE update_table SET `1` = 'nekokak',`2` = 'not',`3` = 'casual' WHERE `log_id` = $i;' ;
-    #my $sql ='DELETE FROM delete_table WHERE `log_id` = $i;' ;
+    #my $sql = "UPDATE update_table SET `1` = 'nekokak',`2` = 'not',`3` = 'casual' WHERE `log_id` = ?;";
+    #my $sql = "DELETE FROM delete_table WHERE `log_id` = ?;";
 
     my $dbh = DBI->connect($d, $u, $p)
         or die "DB Connect error $!";
@@ -31,6 +31,7 @@ sub query_commit_db{
 
     for (my $i = 0;$i < 1000000 ;$i++) {
         $sth = $dbh->prepare($sql) ;
+        #$sth->execute($i) or die "sql execute error $! [$i]!! $sql";
         $sth->execute or die "sql execute error $! [$i]!! $sql";
         print "DB execute OK! $i\n";
     }
